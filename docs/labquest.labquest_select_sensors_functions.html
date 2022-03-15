@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module labquest.labquest_select_sensors_functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="labquest.html"><font color="#ffffff">labquest</font></a>.labquest_select_sensors_functions</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/ihonohan/wrk/gdxlib/github/labquest-py/labquest/labquest_select_sensors_functions.py">/Users/ihonohan/wrk/gdxlib/github/labquest-py/labquest/labquest_select_sensors_functions.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="labquest.config.html">labquest.config</a><br>
+</td><td width="25%" valign=top><a href="labquest.ngio_send_cmd_get_resp.html">labquest.ngio_send_cmd_get_resp</a><br>
+</td><td width="25%" valign=top><a href="labquest.ngio_sensor_functions.html">labquest.ngio_sensor_functions</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-build_channel_dictionary"><strong>build_channel_dictionary</strong></a>()</dt><dd><tt>1D&nbsp;list&nbsp;of&nbsp;each&nbsp;devices&nbsp;analog&nbsp;channel&nbsp;info.&nbsp;The&nbsp;channel&nbsp;info&nbsp;is&nbsp;a&nbsp;2D&nbsp;library<br>
+For&nbsp;example<br>
+[{ch1:{sensor&nbsp;info&nbsp;dictionary},&nbsp;ch2:{sensor&nbsp;info&nbsp;dictionary},&nbsp;ch3:{sensor&nbsp;info&nbsp;dictionary}}]&nbsp;<br>
+Get&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;sensor&nbsp;in&nbsp;ch1&nbsp;of&nbsp;dev0&nbsp;=&nbsp;(device_channel_dictionary[0]["ch1"]["name"])</tt></dd></dl>
+ <dl><dt><a name="-build_dig_channel_dictionary"><strong>build_dig_channel_dictionary</strong></a>(*args)</dt><dd><tt>Create&nbsp;a&nbsp;dictionary&nbsp;that&nbsp;just&nbsp;has&nbsp;information&nbsp;on&nbsp;how&nbsp;the&nbsp;digital&nbsp;channels&nbsp;are&nbsp;configured.</tt></dd></dl>
+ <dl><dt><a name="-calcsize"><strong>calcsize</strong></a>(format, /)</dt><dd><tt>Return&nbsp;size&nbsp;in&nbsp;bytes&nbsp;of&nbsp;the&nbsp;struct&nbsp;described&nbsp;by&nbsp;the&nbsp;format&nbsp;string.</tt></dd></dl>
+ <dl><dt><a name="-configure_channels_and_sensors"><strong>configure_channels_and_sensors</strong></a>(*args)</dt><dd><tt>Use&nbsp;the&nbsp;*args&nbsp;information&nbsp;to&nbsp;create&nbsp;various&nbsp;lists&nbsp;of&nbsp;what&nbsp;sensors&nbsp;are&nbsp;active.&nbsp;These&nbsp;lists&nbsp;are&nbsp;<br>
+used&nbsp;in&nbsp;the&nbsp;rest&nbsp;of&nbsp;the&nbsp;program&nbsp;to&nbsp;determine&nbsp;what&nbsp;channels&nbsp;to&nbsp;start,&nbsp;read,&nbsp;etc...&nbsp;If&nbsp;the&nbsp;user&nbsp;did<br>
+not&nbsp;input&nbsp;*args,&nbsp;a&nbsp;prompt&nbsp;will&nbsp;take&nbsp;them&nbsp;through&nbsp;each&nbsp;channel&nbsp;to&nbsp;configure.</tt></dd></dl>
+ <dl><dt><a name="-configure_channels_using_dictionary"><strong>configure_channels_using_dictionary</strong></a>(*args)</dt><dd><tt>Create&nbsp;the&nbsp;'enabled&nbsp;channel'&nbsp;lists&nbsp;for&nbsp;active&nbsp;analog&nbsp;and&nbsp;digital&nbsp;sensors&nbsp;based&nbsp;on&nbsp;the&nbsp;<br>
+*args&nbsp;values&nbsp;sent&nbsp;by&nbsp;the&nbsp;user.<br>
+&nbsp;<br>
+The&nbsp;key&nbsp;options&nbsp;are:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ch1',&nbsp;'ch2',&nbsp;'ch3',&nbsp;'dig1',&nbsp;and&nbsp;'dig2'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;values&nbsp;for&nbsp;the&nbsp;3&nbsp;analog&nbsp;channels&nbsp;are:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'default',&nbsp;'cal0',&nbsp;'cal1',&nbsp;'cal2',&nbsp;'raw_voltage'.&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;dig&nbsp;channel&nbsp;values&nbsp;are:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'motion',&nbsp;'photogate',&nbsp;'rotary_motion',&nbsp;'rotary_motion_high_res',&nbsp;'dcu',&nbsp;'dcu_pwm.</tt></dd></dl>
+ <dl><dt><a name="-custom_analog_ch_setup"><strong>custom_analog_ch_setup</strong></a>()</dt><dd><tt>This&nbsp;option&nbsp;provides&nbsp;the&nbsp;user&nbsp;with&nbsp;a&nbsp;way&nbsp;to&nbsp;configure&nbsp;a&nbsp;channel&nbsp;to&nbsp;read<br>
+a&nbsp;non-Vernier&nbsp;sensor,&nbsp;or&nbsp;to&nbsp;read&nbsp;a&nbsp;LabQuest&nbsp;sensor's&nbsp;raw&nbsp;voltage.&nbsp;Returns&nbsp;an<br>
+updated&nbsp;enabled&nbsp;channel&nbsp;list.</tt></dd></dl>
+ <dl><dt><a name="-custom_digital_ch_setup"><strong>custom_digital_ch_setup</strong></a>()</dt><dd><tt>This&nbsp;option&nbsp;provides&nbsp;the&nbsp;user&nbsp;with&nbsp;a&nbsp;way&nbsp;to&nbsp;configure&nbsp;a&nbsp;digital&nbsp;channel&nbsp;to&nbsp;read<br>
+a&nbsp;Vernier&nbsp;motion&nbsp;detector,&nbsp;photogate,&nbsp;rotary&nbsp;motion&nbsp;sensor,&nbsp;or&nbsp;dcu.&nbsp;Returns&nbsp;an<br>
+updated&nbsp;enabled&nbsp;digital&nbsp;channel&nbsp;list.</tt></dd></dl>
+ <dl><dt><a name="-ddsmem_set_record"><strong>ddsmem_set_record</strong></a>(hDevice, channel, sensor_id)</dt><dd><tt>Some&nbsp;LabQuest&nbsp;sensors&nbsp;are&nbsp;resistor&nbsp;ID&nbsp;sensors.&nbsp;In&nbsp;this&nbsp;case,&nbsp;all&nbsp;of&nbsp;the&nbsp;sensor&nbsp;information&nbsp;is&nbsp;<br>
+stored&nbsp;in&nbsp;a&nbsp;text&nbsp;file.&nbsp;Read&nbsp;that&nbsp;text&nbsp;file&nbsp;to&nbsp;get&nbsp;the&nbsp;information,&nbsp;and&nbsp;then&nbsp;'set'&nbsp;that&nbsp;info<br>
+in&nbsp;NGIO&nbsp;ddsmem.</tt></dd></dl>
+ <dl><dt><a name="-get_list_of_device_enabled_analog_channels"><strong>get_list_of_device_enabled_analog_channels</strong></a>()</dt><dd><tt>Return&nbsp;a&nbsp;2D&nbsp;list&nbsp;of&nbsp;all&nbsp;channels&nbsp;that&nbsp;have&nbsp;LabQuest&nbsp;auto-id&nbsp;sensors&nbsp;connected&nbsp;(sensor&nbsp;id&nbsp;&gt;&nbsp;0)</tt></dd></dl>
+ <dl><dt><a name="-get_sensor_calibration_values"><strong>get_sensor_calibration_values</strong></a>()</dt><dd><tt>Return&nbsp;sensor_cal_list</tt></dd></dl>
+ <dl><dt><a name="-get_sensor_id"><strong>get_sensor_id</strong></a>(hDevice, channel)</dt><dd><tt>Each&nbsp;LabQuest&nbsp;sensor&nbsp;has&nbsp;a&nbsp;unique&nbsp;ID.&nbsp;Get&nbsp;that&nbsp;value</tt></dd></dl>
+ <dl><dt><a name="-get_sensor_operation_type_list"><strong>get_sensor_operation_type_list</strong></a>()</dt><dd><tt>Return&nbsp;op_type_list&nbsp;and&nbsp;probe_type_list.&nbsp;This&nbsp;info&nbsp;is&nbsp;required&nbsp;for&nbsp;how&nbsp;an&nbsp;analog&nbsp;channel&nbsp;is&nbsp;<br>
+configured&nbsp;and&nbsp;read.</tt></dd></dl>
+ <dl><dt><a name="-iter_unpack"><strong>iter_unpack</strong></a>(format, buffer, /)</dt><dd><tt>Return&nbsp;an&nbsp;iterator&nbsp;yielding&nbsp;tuples&nbsp;unpacked&nbsp;from&nbsp;the&nbsp;given&nbsp;bytes.<br>
+&nbsp;<br>
+The&nbsp;bytes&nbsp;are&nbsp;unpacked&nbsp;according&nbsp;to&nbsp;the&nbsp;format&nbsp;string,&nbsp;like<br>
+a&nbsp;repeated&nbsp;invocation&nbsp;of&nbsp;<a href="#-unpack_from">unpack_from</a>().<br>
+&nbsp;<br>
+Requires&nbsp;that&nbsp;the&nbsp;bytes&nbsp;length&nbsp;be&nbsp;a&nbsp;multiple&nbsp;of&nbsp;the&nbsp;format&nbsp;struct&nbsp;size.</tt></dd></dl>
+ <dl><dt><a name="-pack"><strong>pack</strong></a>(...)</dt><dd><tt><a href="#-pack">pack</a>(format,&nbsp;v1,&nbsp;v2,&nbsp;...)&nbsp;-&gt;&nbsp;bytes<br>
+&nbsp;<br>
+Return&nbsp;a&nbsp;bytes&nbsp;object&nbsp;containing&nbsp;the&nbsp;values&nbsp;v1,&nbsp;v2,&nbsp;...&nbsp;packed&nbsp;according<br>
+to&nbsp;the&nbsp;format&nbsp;string.&nbsp;&nbsp;See&nbsp;help(struct)&nbsp;for&nbsp;more&nbsp;on&nbsp;format&nbsp;strings.</tt></dd></dl>
+ <dl><dt><a name="-pack_into"><strong>pack_into</strong></a>(...)</dt><dd><tt><a href="#-pack_into">pack_into</a>(format,&nbsp;buffer,&nbsp;offset,&nbsp;v1,&nbsp;v2,&nbsp;...)<br>
+&nbsp;<br>
+Pack&nbsp;the&nbsp;values&nbsp;v1,&nbsp;v2,&nbsp;...&nbsp;according&nbsp;to&nbsp;the&nbsp;format&nbsp;string&nbsp;and&nbsp;write<br>
+the&nbsp;packed&nbsp;bytes&nbsp;into&nbsp;the&nbsp;writable&nbsp;buffer&nbsp;buf&nbsp;starting&nbsp;at&nbsp;offset.&nbsp;&nbsp;Note<br>
+that&nbsp;the&nbsp;offset&nbsp;is&nbsp;a&nbsp;required&nbsp;argument.&nbsp;&nbsp;See&nbsp;help(struct)&nbsp;for&nbsp;more<br>
+on&nbsp;format&nbsp;strings.</tt></dd></dl>
+ <dl><dt><a name="-read_sensor_dds_memory"><strong>read_sensor_dds_memory</strong></a>()</dt><dd><tt>For&nbsp;each&nbsp;enabled&nbsp;channel,&nbsp;read&nbsp;the&nbsp;sensor's&nbsp;dds&nbsp;memory&nbsp;(auto-id&nbsp;and&nbsp;resistor&nbsp;<br>
+id&nbsp;are&nbsp;done&nbsp;differently)</tt></dd></dl>
+ <dl><dt><a name="-set_channel_to_read_raw_voltage"><strong>set_channel_to_read_raw_voltage</strong></a>(hDevice, channel)</dt><dd><tt>Overwrite&nbsp;the&nbsp;ddsmem&nbsp;in&nbsp;order&nbsp;to&nbsp;make&nbsp;this&nbsp;channel&nbsp;read&nbsp;Raw&nbsp;Voltage&nbsp;(0-5V)</tt></dd></dl>
+ <dl><dt><a name="-set_config_dig_chs_to_true_or_false"><strong>set_config_dig_chs_to_true_or_false</strong></a>()</dt><dd><tt>There&nbsp;is&nbsp;a&nbsp;config.py&nbsp;file&nbsp;that&nbsp;stores&nbsp;information&nbsp;about&nbsp;how&nbsp;the&nbsp;channels&nbsp;are&nbsp;configured.<br>
+This&nbsp;information&nbsp;is&nbsp;used&nbsp;throughout&nbsp;the&nbsp;program.&nbsp;This&nbsp;function&nbsp;sets&nbsp;a&nbsp;True/False&nbsp;for&nbsp;<br>
+what&nbsp;digital&nbsp;devices&nbsp;are&nbsp;being&nbsp;used&nbsp;in&nbsp;the&nbsp;program.</tt></dd></dl>
+ <dl><dt><a name="-unpack"><strong>unpack</strong></a>(format, buffer, /)</dt><dd><tt>Return&nbsp;a&nbsp;tuple&nbsp;containing&nbsp;values&nbsp;unpacked&nbsp;according&nbsp;to&nbsp;the&nbsp;format&nbsp;string.<br>
+&nbsp;<br>
+The&nbsp;buffer's&nbsp;size&nbsp;in&nbsp;bytes&nbsp;must&nbsp;be&nbsp;<a href="#-calcsize">calcsize</a>(format).<br>
+&nbsp;<br>
+See&nbsp;help(struct)&nbsp;for&nbsp;more&nbsp;on&nbsp;format&nbsp;strings.</tt></dd></dl>
+ <dl><dt><a name="-unpack_from"><strong>unpack_from</strong></a>(format, /, buffer, offset=0)</dt><dd><tt>Return&nbsp;a&nbsp;tuple&nbsp;containing&nbsp;values&nbsp;unpacked&nbsp;according&nbsp;to&nbsp;the&nbsp;format&nbsp;string.<br>
+&nbsp;<br>
+The&nbsp;buffer's&nbsp;size,&nbsp;minus&nbsp;offset,&nbsp;must&nbsp;be&nbsp;at&nbsp;least&nbsp;<a href="#-calcsize">calcsize</a>(format).<br>
+&nbsp;<br>
+See&nbsp;help(struct)&nbsp;for&nbsp;more&nbsp;on&nbsp;format&nbsp;strings.</tt></dd></dl>
+</td></tr></table>
+</body></html>

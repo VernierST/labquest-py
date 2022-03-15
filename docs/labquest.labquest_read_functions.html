@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module labquest.labquest_read_functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="labquest.html"><font color="#ffffff">labquest</font></a>.labquest_read_functions</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/ihonohan/wrk/gdxlib/github/labquest-py/labquest/labquest_read_functions.py">/Users/ihonohan/wrk/gdxlib/github/labquest-py/labquest/labquest_read_functions.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="labquest.config.html">labquest.config</a><br>
+</td><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="labquest.ngio_read_functions.html">labquest.ngio_read_functions</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-apply_calibration"><strong>apply_calibration</strong></a>(calibration_values, voltage)</dt><dd><tt>Use&nbsp;the&nbsp;equation&nbsp;and&nbsp;calibration&nbsp;values&nbsp;(stored&nbsp;in&nbsp;the&nbsp;sensor_cal_list)&nbsp;to&nbsp;convert&nbsp;the<br>
+sensor's&nbsp;reading&nbsp;in&nbsp;voltage&nbsp;to&nbsp;proper&nbsp;sensor&nbsp;units.</tt></dd></dl>
+ <dl><dt><a name="-clear_the_lq_measurement_buffer"><strong>clear_the_lq_measurement_buffer</strong></a>()</dt><dd><tt>This&nbsp;function&nbsp;empties&nbsp;the&nbsp;measurement&nbsp;buffers.&nbsp;This&nbsp;should&nbsp;happen&nbsp;once&nbsp;measurements&nbsp;have&nbsp;been<br>
+stopped,&nbsp;and&nbsp;before&nbsp;starting&nbsp;measurements&nbsp;again.</tt></dd></dl>
+ <dl><dt><a name="-get_all_measurements"><strong>get_all_measurements</strong></a>()</dt><dd><tt>Get&nbsp;measurements&nbsp;from&nbsp;all&nbsp;configured&nbsp;channels&nbsp;(analog&nbsp;and&nbsp;digital)</tt></dd></dl>
+ <dl><dt><a name="-get_analog_measurements"><strong>get_analog_measurements</strong></a>()</dt><dd><tt>Get&nbsp;a&nbsp;single&nbsp;analog&nbsp;sensor(s)&nbsp;measurement.&nbsp;This&nbsp;may&nbsp;be&nbsp;from&nbsp;the&nbsp;buffer,&nbsp;or&nbsp;as&nbsp;a&nbsp;new&nbsp;reading.</tt></dd></dl>
+ <dl><dt><a name="-get_motion_measurements"><strong>get_motion_measurements</strong></a>()</dt><dd><tt>The&nbsp;motion&nbsp;detector&nbsp;requires&nbsp;two&nbsp;timing&nbsp;values&nbsp;to&nbsp;compute&nbsp;distance.&nbsp;Get&nbsp;the&nbsp;two&nbsp;<br>
+values&nbsp;and&nbsp;convert&nbsp;to&nbsp;distance.</tt></dd></dl>
+ <dl><dt><a name="-get_multi_pt_measurements"><strong>get_multi_pt_measurements</strong></a>(num_measurements_to_read)</dt><dd><tt>Get&nbsp;a&nbsp;packet&nbsp;of&nbsp;analog&nbsp;sensor&nbsp;measurements.</tt></dd></dl>
+ <dl><dt><a name="-get_photogate_measurements"><strong>get_photogate_measurements</strong></a>()</dt><dd><tt>This&nbsp;is&nbsp;simple&nbsp;counting&nbsp;values&nbsp;(timing&nbsp;values&nbsp;are&nbsp;a&nbsp;separate&nbsp;function&nbsp;-&nbsp;see&nbsp;the<br>
+'labquest_photogate_timing.py'&nbsp;file&nbsp;for&nbsp;more&nbsp;info&nbsp;on&nbsp;timing).&nbsp;<br>
+Counting&nbsp;is&nbsp;similar&nbsp;to&nbsp;regular&nbsp;analog&nbsp;sensors&nbsp;in&nbsp;that&nbsp;a&nbsp;single&nbsp;count&nbsp;value&nbsp;is&nbsp;returned&nbsp;at&nbsp;a&nbsp;<br>
+requested&nbsp;sampling&nbsp;period.</tt></dd></dl>
+ <dl><dt><a name="-get_rotary_measurements"><strong>get_rotary_measurements</strong></a>()</dt><dd><tt>Get&nbsp;a&nbsp;single&nbsp;rotary&nbsp;measurement.&nbsp;If&nbsp;more&nbsp;than&nbsp;one&nbsp;is&nbsp;returned&nbsp;it&nbsp;will&nbsp;be&nbsp;stored&nbsp;in&nbsp;the<br>
+buffer&nbsp;to&nbsp;be&nbsp;accessed&nbsp;with&nbsp;the&nbsp;next&nbsp;read.</tt></dd></dl>
+ <dl><dt><a name="-number_measurements_available"><strong>number_measurements_available</strong></a>(sample_period)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;how&nbsp;many&nbsp;analog&nbsp;sensor&nbsp;measurements&nbsp;are&nbsp;availabe&nbsp;for&nbsp;each&nbsp;active&nbsp;channel.</tt></dd></dl>
+ <dl><dt><a name="-number_measurements_available_digital"><strong>number_measurements_available_digital</strong></a>(sample_period, num_msrmnts_needed)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;how&nbsp;many&nbsp;measurements&nbsp;are&nbsp;availabe&nbsp;for&nbsp;each&nbsp;active&nbsp;channel.</tt></dd></dl>
+ <dl><dt><a name="-number_measurements_available_multipt"><strong>number_measurements_available_multipt</strong></a>(sample_period, num_msrmnts)</dt><dd><tt>Return&nbsp;a&nbsp;list&nbsp;of&nbsp;how&nbsp;many&nbsp;analog&nbsp;sensor&nbsp;measurements&nbsp;are&nbsp;availabe&nbsp;for&nbsp;each&nbsp;active&nbsp;channel.</tt></dd></dl>
+ <dl><dt><a name="-pull_value_from_buffer"><strong>pull_value_from_buffer</strong></a>()</dt><dd><tt>Pull&nbsp;a&nbsp;single&nbsp;analog&nbsp;sensor&nbsp;reading&nbsp;for&nbsp;each&nbsp;sensor&nbsp;out&nbsp;of&nbsp;the&nbsp;buffer.</tt></dd></dl>
+ <dl><dt><a name="-pull_value_from_rotary_buffer"><strong>pull_value_from_rotary_buffer</strong></a>()</dt><dd><tt>Pull&nbsp;a&nbsp;single&nbsp;rotary&nbsp;motion&nbsp;sensor&nbsp;reading&nbsp;for&nbsp;each&nbsp;sensor&nbsp;out&nbsp;of&nbsp;the&nbsp;buffer.</tt></dd></dl>
+ <dl><dt><a name="-read_and_calibrate_data"><strong>read_and_calibrate_data</strong></a>(max_num_measurements_available)</dt><dd><tt>For&nbsp;each&nbsp;active&nbsp;analog&nbsp;channel,&nbsp;get&nbsp;the&nbsp;raw&nbsp;measurement&nbsp;(this&nbsp;may&nbsp;be&nbsp;a&nbsp;single&nbsp;value&nbsp;or&nbsp;multiple<br>
+if&nbsp;sampling&nbsp;fast),&nbsp;convert&nbsp;to&nbsp;a&nbsp;voltage,&nbsp;and&nbsp;then&nbsp;apply&nbsp;the&nbsp;calibration&nbsp;to&nbsp;convert&nbsp;to&nbsp;<br>
+proper&nbsp;sensor&nbsp;units.&nbsp;One&nbsp;value&nbsp;for&nbsp;each&nbsp;sensor&nbsp;is&nbsp;returned&nbsp;with&nbsp;any&nbsp;extra&nbsp;values&nbsp;sent&nbsp;to&nbsp;the&nbsp;buffer.</tt></dd></dl>
+ <dl><dt><a name="-read_and_calibrate_motion_data"><strong>read_and_calibrate_motion_data</strong></a>(max_num_measurements_available)</dt><dd><tt>For&nbsp;each&nbsp;active&nbsp;channel,&nbsp;get&nbsp;two&nbsp;timing&nbsp;values.&nbsp;Use&nbsp;these&nbsp;2&nbsp;timestamps<br>
+to&nbsp;calculate&nbsp;distance.&nbsp;Unlike&nbsp;analog&nbsp;data&nbsp;collection,&nbsp;there&nbsp;is&nbsp;no&nbsp;buffer&nbsp;for&nbsp;storing<br>
+extra&nbsp;values.&nbsp;This&nbsp;should&nbsp;not&nbsp;be&nbsp;an&nbsp;issue&nbsp;because&nbsp;motion&nbsp;detector&nbsp;requires&nbsp;slower&nbsp;<br>
+sampling.</tt></dd></dl>
+ <dl><dt><a name="-read_and_calibrate_multi_pt_data"><strong>read_and_calibrate_multi_pt_data</strong></a>(max_num_measurements_available)</dt><dd><tt>For&nbsp;each&nbsp;active&nbsp;channel,&nbsp;get&nbsp;the&nbsp;raw&nbsp;measurements,&nbsp;convert&nbsp;to&nbsp;voltage,&nbsp;and&nbsp;then&nbsp;<br>
+apply&nbsp;the&nbsp;calibration&nbsp;to&nbsp;convert&nbsp;to&nbsp;proper&nbsp;sensor&nbsp;units.&nbsp;The&nbsp;number&nbsp;of&nbsp;data&nbsp;points<br>
+asked&nbsp;for&nbsp;are&nbsp;returned.</tt></dd></dl>
+ <dl><dt><a name="-read_photogate_data"><strong>read_photogate_data</strong></a>(max_num_measurements_available)</dt><dd><tt>For&nbsp;each&nbsp;active&nbsp;channel,&nbsp;get&nbsp;the&nbsp;count&nbsp;value&nbsp;and&nbsp;timestamp&nbsp;measurement.</tt></dd></dl>
+ <dl><dt><a name="-read_rotary_data"><strong>read_rotary_data</strong></a>(max_num_measurements_available)</dt><dd><tt>For&nbsp;each&nbsp;active&nbsp;channel,&nbsp;get&nbsp;angle&nbsp;measurements&nbsp;(this&nbsp;may&nbsp;be&nbsp;a&nbsp;single&nbsp;value&nbsp;or&nbsp;multiple<br>
+if&nbsp;sampling&nbsp;fast).&nbsp;One&nbsp;value&nbsp;for&nbsp;each&nbsp;sensor&nbsp;is&nbsp;returned&nbsp;with&nbsp;any&nbsp;extra&nbsp;values&nbsp;sent&nbsp;to&nbsp;the&nbsp;buffer.</tt></dd></dl>
+ <dl><dt><a name="-sleep"><strong>sleep</strong></a>(...)</dt><dd><tt><a href="#-sleep">sleep</a>(seconds)<br>
+&nbsp;<br>
+Delay&nbsp;execution&nbsp;for&nbsp;a&nbsp;given&nbsp;number&nbsp;of&nbsp;seconds.&nbsp;&nbsp;The&nbsp;argument&nbsp;may&nbsp;be<br>
+a&nbsp;floating&nbsp;point&nbsp;number&nbsp;for&nbsp;subsecond&nbsp;precision.</tt></dd></dl>
+</td></tr></table>
+</body></html>
