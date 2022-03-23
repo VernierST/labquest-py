@@ -414,10 +414,9 @@ def read_and_calibrate_motion_data(max_num_measurements_available):
                 v = 340/1000
                 # The total distance is round trip (out and back). 
                 # Divide by 2 to get distance from object to motion detector. 
-                distance = v*t/2
-                distance_cm = distance*100  
+                distance = v*t/2    # distance in meters
                 
-                distance_values.append(distance_cm)
+                distance_values.append(distance)
 
     return distance_values
 
