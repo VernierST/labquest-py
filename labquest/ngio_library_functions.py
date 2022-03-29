@@ -25,13 +25,14 @@ def load_library():
     elif os_name == 'Darwin':
         dll_name = "libNGIOUniversal.dylib"
     else:
-        config.logger.error(os_name, "not supported. Only Darwin (Mac) and Windows OS supported.")
+        config.logger.debug(os_name, "not supported. Only Darwin (Mac) and Windows OS supported.")
+    config.logger.debug("Name of the shared library to open: ", dll_name)
     
     
     # This code will use the path to the directory of this file to create the path to the dll file
     #dll_file_path = (os.path.dirname(__file__)) + os.path.sep + dll_name
     dll_file_path = os.path.dirname((os.path.dirname(__file__))) + os.path.sep + library_folder + os.path.sep + dll_name
-    config.logger.debug("dll file path:  " + dll_file_path)
+    config.logger.debug("File path to locate the NGIO shared library:  " + dll_file_path)
     dll = cdll.LoadLibrary(dll_file_path)
     
     return dll
@@ -52,7 +53,7 @@ def ngio_init():
     hLib = p_init(None)
     # Check the return value.  If a handle value = 0, then did not open
     if hLib == 0:
-        config.logger.error("ERROR - Unable to open NGIO Library Handle")
+        config.logger.debug("Unable to open NGIO Library Handle (hLib) in the Init")
     return hLib
 
 
@@ -75,6 +76,6 @@ def ngio_get_dll_version():
     get_dll_version_return = p_get_dll_version(config.hLib, byref(maj), byref(min))
     # Check the return value (0 if successful, else -1)
     if get_dll_version_return == -1:
-        config.logger.error("ERROR opening NGIO_GetDLLVersion")   
+        config.logger.debug("ERROR opening NGIO_GetDLLVersion")   
     #return "Found NGIO library: Version " + str(maj.value) +"." + str(min.value)
     return maj.value, min.value

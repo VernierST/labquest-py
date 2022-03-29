@@ -29,6 +29,6 @@ def send_cmd_get_response(hDevice, command, parameters, param_bytes):
            hDevice, command, parameters_new, param_bytes, resp_buffer, resp_bytes, timeout_ms)
     # Check the the SendCmdAndGetResponse function return value. Return: 0 if successful, else -1!
     if send_cmd_get_response_return == -1:
-        config.logger.error("ERROR calling send_cmd_get_response")
+        config.logger.debug("ERROR calling NGIO_send_cmd_get_response")
         
     return resp_buffer, resp_bytes.value

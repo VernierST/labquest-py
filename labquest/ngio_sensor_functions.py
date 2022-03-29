@@ -21,7 +21,7 @@ def ddsmem_read_record(hDevice, channel):
     ddsmem_read_record_return = p_ddsmem_read_record(hDevice, channel, strict_dds_validation_flag, timeout_ms)
     # Check the DDS_ReadRecord command return value.  If a 0 returned, success, else -1!
     if ddsmem_read_record_return == -1:
-        config.logger.error("ERROR calling DDSMem ReadRecord")
+        config.logger.debug("ERROR calling DDSMem ReadRecord")
 
 
 def ddsmem_get_long_name(hDevice, channel):
@@ -41,7 +41,7 @@ def ddsmem_get_long_name(hDevice, channel):
     ddsmem_get_long_name_return = p_ddsmem_get_long_name(hDevice, channel, p_long_name, max_num_bytes_to_copy )
     # Check the DDS_GetLongName command return value.  If a 0 returned, success, else -1!
     if ddsmem_get_long_name_return == -1:
-        config.logger.error("ERROR calling DDSMem GetLongName")
+        config.logger.debug("ERROR calling DDSMem GetLongName")
     config.logger.debug("sensor long name = " + str(p_long_name.value))
     return str(p_long_name.value.decode('utf-8'))
 
@@ -63,7 +63,7 @@ def ddsmem_set_long_name(hDevice, channel, long_name):
     ddsmem_set_long_name_return = p_ddsmem_set_long_name(hDevice, channel, p_long_name)
     # Check the DDS_SetLongName command return value.  If a 0 returned, success, else -1!
     if ddsmem_set_long_name_return == -1:
-        config.logger.error("ERROR calling DDSMem SetLongName")
+        config.logger.debug("ERROR calling DDSMem SetLongName")
 
 
 def ddsmem_get_short_name(hDevice, channel):
@@ -83,7 +83,7 @@ def ddsmem_get_short_name(hDevice, channel):
     ddsmem_get_short_name_return = p_ddsmem_get_short_name(hDevice, channel, p_short_name, max_num_bytes_to_copy)
     # Check the DDS_GetShortName command return value.  If a 0 returned, success, else -1!
     if ddsmem_get_short_name_return == -1:
-        config.logger.error("ERROR calling DDSMem GetShortName")
+        config.logger.debug("ERROR calling DDSMem GetShortName")
     config.logger.debug("sensor short name = " + str(p_short_name.value))
     return str(p_short_name.value.decode('utf-8'))
 
@@ -106,7 +106,7 @@ def ddsmem_set_short_name(hDevice, channel, short_name):
     ddsmem_set_short_name_return = p_ddsmem_set_short_name(hDevice, channel, p_short_name)
     # Check the DDS_SetShortName command return value.  If a 0 returned, success, else -1!
     if ddsmem_set_short_name_return == -1:
-        config.logger.error("ERROR calling DDSMem SetShortName")
+        config.logger.debug("ERROR calling DDSMem SetShortName")
 
 
 def ddsmem_get_typ_sample_period(hDevice, channel):
@@ -126,7 +126,7 @@ def ddsmem_get_typ_sample_period(hDevice, channel):
     ddsmem_get_typ_sample_period_return = p_ddsmem_get_typ_sample_period(hDevice, channel, p_typ_sample_period)
     # Check the DDS_GetTypSamplePeriod command return value.  If a 0 returned, success, else -1!
     if ddsmem_get_typ_sample_period_return == -1:
-        config.logger.error("ERROR calling DDSMem GetTypSamplePeriod")
+        config.logger.debug("ERROR calling DDSMem GetTypSamplePeriod")
     config.logger.debug("typical sample period = " + str(p_typ_sample_period.value))
     return p_typ_sample_period.value
 
@@ -149,7 +149,7 @@ def ddsmem_get_calibration_equation(hDevice, channel):
             hDevice, channel, p_calibration_equation)
     # Check the DDS_GetCalibrationEquation command return value.  If a 0 returned, success, else -1!
     if ddsmem_get_calibration_equation_return == -1:
-        config.logger.error("ERROR calling DDSMem GetCalibrationEquation")
+        config.logger.debug("ERROR calling DDSMem GetCalibrationEquation")
     config.logger.debug("Calibration Equation = " + str(p_calibration_equation.value))
     return p_calibration_equation.value
 
@@ -171,7 +171,7 @@ def ddsmem_set_calibration_equation(hDevice, channel, cal_equation):
     ddsmem_set_calibration_equation_return = p_ddsmem_set_calibration_equation(hDevice, channel, calibration_equation)
     # Check the DDS_SetCalibrationEquation command return value.  If a 0 returned, success, else -1!
     if ddsmem_set_calibration_equation_return == -1:
-        config.logger.error("ERROR calling DDSMem SetCalibrationEquation")
+        config.logger.debug("ERROR calling DDSMem SetCalibrationEquation")
 
 
 def ddsmem_get_active_cal_page(hDevice, channel):
@@ -192,7 +192,7 @@ def ddsmem_get_active_cal_page(hDevice, channel):
         hDevice, channel, p_active_cal_page)
     # Check the DDS_GetActiveCalPage command return value.  If a 0 returned, success, else -1!
     if p_ddsmem_get_active_cal_page_return == -1:
-        config.logger.error("ERROR calling DDSMem GetActiveCalPage")
+        config.logger.debug("ERROR calling DDSMem GetActiveCalPage")
     config.logger.debug("Active Cal Page = " + str(p_active_cal_page.value))
     return p_active_cal_page.value
 
@@ -214,7 +214,7 @@ def ddsmem_set_active_cal_page(hDevice, channel, active_calpage):
         hDevice, channel, active_cal_page)
     # Check the DDS_SetActiveCalPage command return value.  If a 0 returned, success, else -1!
     if p_ddsmem_set_active_cal_page_return == -1:
-        config.logger.error("ERROR calling DDSMem SetActiveCalPage")
+        config.logger.debug("ERROR calling DDSMem SetActiveCalPage")
 
 def ddsmem_get_highest_valid_cal_page_index(hDevice, channel):
     """
@@ -236,7 +236,7 @@ def ddsmem_get_highest_valid_cal_page_index(hDevice, channel):
         hDevice, channel, p_highest_valid_cal_page_index)
     # Check the return value.  If a 0 returned, success, else -1!
     if p_ddsmem_get_highest_valid_cal_page_index_return == -1:
-        config.logger.error("ERROR calling DDSMem GetHighestValidCalPageIndex")
+        config.logger.debug("ERROR calling DDSMem GetHighestValidCalPageIndex")
     config.logger.debug("Highest Valid Cal Page Index = " + str(p_highest_valid_cal_page_index.value))
     return p_highest_valid_cal_page_index.value
 
@@ -259,7 +259,7 @@ def ddsmem_set_highest_valid_cal_page_index(hDevice, channel, highest_calpage_in
         hDevice, channel, highest_valid_cal_page_index)
     # Check the return value.  If a 0 returned, success, else -1!
     if p_ddsmem_set_highest_valid_cal_page_index_return == -1:
-        config.logger.error("ERROR calling DDSMem SetHighestValidCalPageIndex")
+        config.logger.debug("ERROR calling DDSMem SetHighestValidCalPageIndex")
 
 def ddsmem_get_cal_page(hDevice, channel, index):
     """
@@ -288,7 +288,7 @@ def ddsmem_get_cal_page(hDevice, channel, index):
         p_calibration_coefficient_c, p_units, max_num_bytes_to_copy)
     # Check the DDS_GetCalPage command return value.  If a 0 returned, success, else -1!
     if p_ddsmem_get_cal_page_return == -1:
-        config.logger.error("DDSMem GetCalPage failed")
+        config.logger.debug("ERROR calling DDSMem GetCalPage")
 
     config.logger.debug("Coefficient A = " + str(p_calibration_coefficient_a.value))
     config.logger.debug("Coefficient B = " + str(p_calibration_coefficient_b.value))
@@ -321,7 +321,7 @@ def ddsmem_set_cal_page(hDevice, channel, index, a, b, c, units):
         calibration_coefficient_a, calibration_coefficient_b, calibration_coefficient_c, p_units)
     # Check the DDS_SetCalPage command return value.  If a 0 returned, success, else -1!
     if p_ddsmem_set_cal_page_return == -1:
-        config.logger.error("ERROR calling DDSMem SetCalPage")
+        config.logger.debug("ERROR calling DDSMem SetCalPage")
 
 def ddsmem_get_operation_type(hDevice, channel):
     """
@@ -342,7 +342,7 @@ def ddsmem_get_operation_type(hDevice, channel):
         hDevice, channel, p_operation_type)
     # Check the DDS_GetOperationType command return value.  If a 0 returned, success, else -1!
     if p_ddsmem_get_operation_type_return == -1:
-        config.logger.error("ERROR calling DDSMem GetOperationType")
+        config.logger.debug("ERROR calling DDSMem GetOperationType")
     config.logger.debug("Operation Type = " + str(p_operation_type.value))
     return p_operation_type.value 
 
@@ -365,4 +365,4 @@ def ddsmem_set_operation_type(hDevice, channel, op_type):
         hDevice, channel, op_type)
     # Check the DDS_SetOperationType command return value.  If a 0 returned, success, else -1!
     if p_ddsmem_set_operation_type_return == -1:
-        config.logger.error("ERROR calling DDSMem SetOperationType")
+        config.logger.debug("ERROR calling DDSMem SetOperationType")

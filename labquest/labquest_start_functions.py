@@ -47,8 +47,8 @@ def set_the_sampling_period():
         ngio_start.set_measurement_period(hDevice, channel, config.sample_period)
         sampling_rate = 1/float(ngio_start.get_measurement_period(hDevice, channel))
 
-    config.logger.debug("Measurment period:" + str(config.sample_period) + " seconds/sample") 
-    config.logger.debug("Sampling rate:" + str(sampling_rate) + " samples/sec")
+    config.logger.info("Measurment period:" + str(config.sample_period) + " seconds/sample") 
+    config.logger.info("Sampling rate:" + str(sampling_rate) + " samples/sec")
 
 def configure_channels_as_5V_or_10V():
     """ Configure each active analog channel as a 5V channel or a 10V channel
@@ -151,7 +151,7 @@ def set_dig_ch_sampling_mode():
             elif dig_ch_dictionary[key] in ('dcu', 'dcu_pwm'):
                 sampling_mode = 6    #define NGIO_SAMPLING_MODE_CUSTOM 6
             else:
-                config.logger.error("Error - invalid dig ch dictionary key")
+                config.logger.debug("Invalid dig ch dictionary key")
             command = 0x29    #define NGIO_CMD_ID_SET_SAMPLING_MODE 0x29
             parameters[0] = dig_channel
             parameters[1] = sampling_mode

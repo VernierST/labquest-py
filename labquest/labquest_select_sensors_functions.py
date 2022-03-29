@@ -66,7 +66,7 @@ def configure_channels_and_sensors(*args):
             channel_name_list.append('dig2')
 
 
-        config.logger.debug("Device", i, "enabled channels: ", channel_name_list)
+        config.logger.info("Device", i, "enabled channels: ", channel_name_list)
         i += 1
 
     return config.enabled_all_channels
@@ -359,10 +359,10 @@ def configure_channels_using_dictionary(*args):
                         pass    # do nothing because all auto-id sensors are configured already
                     else:
                         # this would be the case where they misspelled the value or used an invalid value
-                        config.logger.warning("lq.select_sensors() dictionary argument has unrecognized value, 'default' will be used.")
+                        config.logger.debug("lq.select_sensors() dictionary argument has unrecognized value, 'default' will be used.")
         
                 else:
-                    config.logger.warning("Check the lq.select_sensors() argument. Either the dictionary value is not valid or the dictionary value is 'default', 'cal0', 'cal1', or 'cal2', but no Auto-ID sensor is detected on the specified channel")
+                    config.logger.debug("Check the select_sensors() argument. Either the dictionary value is not valid or the dictionary value is 'default', 'cal0', 'cal1', or 'cal2', but no Auto-ID sensor is detected on the specified channel")
 
             elif key in ('dig1', 'dig2'):
 
@@ -377,10 +377,10 @@ def configure_channels_using_dictionary(*args):
                                          'rotary_motion', 'rotary_motion_high_res', 'dcu', 'dcu_pwm'):
                     pass
                 else:
-                    config.logger.warning("dictionary value not valid") 
+                    config.logger.debug("dictionary value not valid") 
 
             else:
-                config.logger.warning("dictionary key not valid")
+                config.logger.debug("dictionary key not valid")
 
         enabled_channel_list.append(active_ch) 
         enabled_dig_ch_list.append(active_dig_ch) 

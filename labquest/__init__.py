@@ -50,12 +50,19 @@ class LabQuest:
 		
 		Determine the device type connected (LQ Mini, LQ3, LQ2, LQ Stream, or Original LQ), 
 		and how many of that type. 
+
+		Returns:
+			0 if successful, else -1!
 		"""
 
 		device_type_name = open.open_labquest_devices()
 		if device_type_name == "no_device":
-			config.logger.warning("No LabQuest device found")  
-			return
+			config.logger.debug("No LabQuest device found")  
+			return_value = -1
+		else:
+			return_value = 0	
+		
+		return return_value
 
 
 	def select_sensors(self, *args):
@@ -90,9 +97,9 @@ class LabQuest:
 
 		active_sensor_channels = sensor.configure_channels_and_sensors(*args)
 		if not any(active_sensor_channels):
-			config.logger.warning("No sensors configured or detected")
+			config.logger.debug("No sensors configured or detected")
 		else:
-			config.logger.debug("Channels configured: " + str(active_sensor_channels))
+			config.logger.info("Channels configured: " + str(active_sensor_channels))
 			pass
 
 

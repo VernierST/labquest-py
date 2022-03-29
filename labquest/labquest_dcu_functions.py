@@ -72,7 +72,7 @@ def set_pwm(frequency_Hz, duty_cycle):
                 
             if dig_ch_dictionary[key] == 'dcu_pwm':
                 if dig_channel == 6:
-                    config.logger.error("Error - PWM output is only available from dig1, not dig2")
+                    config.logger.debug("Incorrect channel: PWM output is only available from dig1, not dig2")
                 command = 0x40    ##define NGIO_CMD_ID_SET_PWM_CONFIG 0x40
                 parameters[0] = dig_channel
                 parameters[1] = 1    # this is for the pwm state: running = 1, off = 0
@@ -84,7 +84,7 @@ def set_pwm(frequency_Hz, duty_cycle):
                 #denominator_bytes = int32_to_int8(denominator)
                 #parameters = (dig_channel, pwm_state) + period_bytes + numerator_bytes + denominator_bytes   # pwm state, period, numerator, denominator
                 param_bytes = 14
-                config.logger.debug("set_pwm: params " + str(parameters))
+                config.logger.info("set_pwm: parameters " + str(parameters))
                 ngio_send.send_cmd_get_response(hDevice, command, parameters, param_bytes)
                 i += 1
 
