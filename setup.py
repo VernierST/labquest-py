@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="labquest",
-    version="0.1.2",
+    version="0.1.3",
     author="Vernier Software and Technology",
     author_email="info@vernier.com",
     description="Library to interface with LabQuest interfaces via USB",

@@ -19,7 +19,7 @@ class LabQuest:
 	interact with Vernier GoDirect devices.
 	"""
 
-	VERSION = "0.1.2"
+	VERSION = "0.1.3"
 
 	""" A class used for labquest communication."""
 	
