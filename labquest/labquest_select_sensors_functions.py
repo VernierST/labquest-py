@@ -65,8 +65,9 @@ def configure_channels_and_sensors(*args):
         if 6 in all_chs:
             channel_name_list.append('dig2')
 
-
-        config.logger.info("Device", i, "enabled channels: ", channel_name_list)
+        str1 = "Device " +str(i) + " enabled channels: " +str(channel_name_list)
+        config.logger.info(str1)
+        
         i += 1
 
     return config.enabled_all_channels
@@ -81,6 +82,7 @@ def get_list_of_device_enabled_analog_channels():
         active_ch = []
         for channel in range (1,4):
             sensor_id = get_sensor_id(hDevice, channel)
+            config.logger.debug("Channel = " +str(channel) +", Auto-ID value = " +str(sensor_id))
             if sensor_id > 0:    # if the id > 0 then a sensor has been detected
                 active_ch.append(channel)    
         enabled_channel_list.append(active_ch)

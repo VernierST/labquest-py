@@ -57,7 +57,7 @@ def get_analog_measurements():
     config.buffer = [] 
     
     num_measurements_available = number_measurements_available(config.sample_period)
-    config.logger.debug("number of measurements available: ", num_measurements_available)
+    config.logger.debug("number of measurements available: " +str(num_measurements_available))
     if 0 in num_measurements_available:
         config.logger.debug("Timed Out - no measurements available to read")
         measurements = []
@@ -185,6 +185,7 @@ def read_and_calibrate_data(max_num_measurements_available):
             for value in values:
                 config.logger.debug("raw value to convert to voltage = " + str(value))
                 voltage = ngio_read.convert_to_voltage(hDevice, channel, value, probe_type)
+                config.logger.debug("voltage = " + str(voltage))
                 calibrated_value = apply_calibration(calibration_values, voltage)
                 calibrated_values.append(calibrated_value)
                 
@@ -222,6 +223,7 @@ def read_and_calibrate_multi_pt_data(max_num_measurements_available):
             for value in values:
                 config.logger.debug("raw value to convert to voltage = " + str(value))
                 voltage = ngio_read.convert_to_voltage(hDevice, channel, value, probe_type)
+                config.logger.debug("voltage = " + str(voltage))
                 calibrated_value = apply_calibration(calibration_values, voltage)
                 calibrated_values.append(calibrated_value)
                 

@@ -117,7 +117,7 @@ def device_open(p_devname_buf):
     hDevice = p_device_open(config.hLib, p_name, demand_exclusive_ownership)
     # Check the DeviceOpen return value.  If a handle value is returned, success!
     # Return:	handle to open device if successful (hDevice), else NULL.
-    config.logger.debug("Device handle (hDevice) = ", hDevice)
+    config.logger.debug("Device handle (hDevice) = " + str(hDevice))
     return hDevice
 
 def acquire_exclusive_ownership(hDevice):

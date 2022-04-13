@@ -25,14 +25,14 @@ def load_library():
     elif os_name == 'Darwin':
         dll_name = "libNGIOUniversal.dylib"
     else:
-        config.logger.debug(os_name, "not supported. Only Darwin (Mac) and Windows OS supported.")
-    config.logger.debug("Name of the shared library to open: ", dll_name)
+        config.logger.debug(str(os_name) + " not supported. Only Darwin (Mac) and Windows OS supported.")
+    config.logger.debug("Name of the shared library to open: " + str(dll_name))
     
     
     # This code will use the path to the directory of this file to create the path to the dll file
     #dll_file_path = (os.path.dirname(__file__)) + os.path.sep + dll_name
     dll_file_path = os.path.dirname((os.path.dirname(__file__))) + os.path.sep + library_folder + os.path.sep + dll_name
-    config.logger.debug("File path to locate the NGIO shared library:  " + dll_file_path)
+    config.logger.debug("File path to locate the NGIO shared library:  " + str(dll_file_path))
     dll = cdll.LoadLibrary(dll_file_path)
     
     return dll

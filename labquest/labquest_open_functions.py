@@ -16,7 +16,7 @@ def open_labquest_devices():
     # Get the device handle(s) and save as 'hDevice' in the config file
     config.hDevice, number_found_devices = get_device_handle_and_num_devices()
     if not config.hDevice:
-        config.logger.debug("Error attempting to open device. Reconnect USB and try again")
+        config.logger.info("No device handle (hDevice)")
         return "no_device"
     else:
         config.logger.info("Number devices found: " + str(number_found_devices))
