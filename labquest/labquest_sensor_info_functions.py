@@ -26,7 +26,7 @@ def get_sensor_long_name_and_units():
             for key in dig_ch_dictionary:  
             
                 if dig_ch_dictionary[key] == 'motion':
-                    string_name_with_units = "Position (cm)"
+                    string_name_with_units = "Position (m)"
                 elif dig_ch_dictionary[key] == 'photogate_count':
                     string_name_with_units = "Count"
                 elif dig_ch_dictionary[key] == 'photogate_timing':
