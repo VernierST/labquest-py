@@ -65,8 +65,9 @@ def configure_channels_and_sensors(*args):
         if 6 in all_chs:
             channel_name_list.append('dig2')
 
-
-        config.logger.debug("Device", i, "enabled channels: ", channel_name_list)
+        str1 = "Device " +str(i) + " enabled channels: " +str(channel_name_list)
+        config.logger.info(str1)
+        
         i += 1
 
     return config.enabled_all_channels
@@ -81,6 +82,7 @@ def get_list_of_device_enabled_analog_channels():
         active_ch = []
         for channel in range (1,4):
             sensor_id = get_sensor_id(hDevice, channel)
+            config.logger.debug("Channel = " +str(channel) +", Auto-ID value = " +str(sensor_id))
             if sensor_id > 0:    # if the id > 0 then a sensor has been detected
                 active_ch.append(channel)    
         enabled_channel_list.append(active_ch)
@@ -359,10 +361,10 @@ def configure_channels_using_dictionary(*args):
                         pass    # do nothing because all auto-id sensors are configured already
                     else:
                         # this would be the case where they misspelled the value or used an invalid value
-                        config.logger.warning("lq.select_sensors() dictionary argument has unrecognized value, 'default' will be used.")
+                        config.logger.debug("lq.select_sensors() dictionary argument has unrecognized value, 'default' will be used.")
         
                 else:
-                    config.logger.warning("Check the lq.select_sensors() argument. Either the dictionary value is not valid or the dictionary value is 'default', 'cal0', 'cal1', or 'cal2', but no Auto-ID sensor is detected on the specified channel")
+                    config.logger.debug("Check the select_sensors() argument. Either the dictionary value is not valid or the dictionary value is 'default', 'cal0', 'cal1', or 'cal2', but no Auto-ID sensor is detected on the specified channel")
 
             elif key in ('dig1', 'dig2'):
 
@@ -377,10 +379,10 @@ def configure_channels_using_dictionary(*args):
                                          'rotary_motion', 'rotary_motion_high_res', 'dcu', 'dcu_pwm'):
                     pass
                 else:
-                    config.logger.warning("dictionary value not valid") 
+                    config.logger.debug("dictionary value not valid") 
 
             else:
-                config.logger.warning("dictionary key not valid")
+                config.logger.debug("dictionary key not valid")
 
         enabled_channel_list.append(active_ch) 
         enabled_dig_ch_list.append(active_dig_ch) 

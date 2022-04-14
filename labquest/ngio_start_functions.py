@@ -26,7 +26,7 @@ def set_measurement_period(hDevice, channel, period):
     set_measurement_period_return = p_set_measurement_period(hDevice, channel, desired_period, set_period_timeout_ms)
     # Check the SetMeasurementPeriod return value. Return: 0 if successful, else -1!
     if set_measurement_period_return == -1:
-        config.logger.error("ERROR calling SetMeasurementPeriod")
+        config.logger.debug("ERROR calling SetMeasurementPeriod")
 
 def get_measurement_period(hDevice, channel):
     """
@@ -46,6 +46,6 @@ def get_measurement_period(hDevice, channel):
     get_measurement_period_return = p_get_measurement_period(hDevice, channel, p_period, set_period_timeout_ms)
     # Check the GetMeasurementPeriod return value. Return: 0 if successful, else -1!
     if get_measurement_period_return == -1:
-        config.logger.error("ERROR calling GetMeasurementPeriod")
+        config.logger.debug("ERROR calling GetMeasurementPeriod")
     return str(p_period.value)
 

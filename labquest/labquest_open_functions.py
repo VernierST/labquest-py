@@ -11,16 +11,16 @@ def open_labquest_devices():
     if not config.device_type: 
         return "no_device"
     else:
-        config.logger.debug("Found device type: " + str(device_type_name))
+        config.logger.info("Found device type: " + str(device_type_name))
     
     # Get the device handle(s) and save as 'hDevice' in the config file
     config.hDevice, number_found_devices = get_device_handle_and_num_devices()
     if not config.hDevice:
-        config.logger.error("Error attempting to open device. Reconnect USB and try again")
+        config.logger.info("No device handle (hDevice)")
         return "no_device"
     else:
-        config.logger.debug("Number devices found: " + str(number_found_devices))
-        config.logger.debug("Number of device handles opened: " + str(len(config.hDevice)))
+        config.logger.info("Number devices found: " + str(number_found_devices))
+        config.logger.info("Number of device handles opened: " + str(len(config.hDevice)))
 
     # If a LQ Mini is connnected, set the LabQuest LED to green
     if config.device_type == 12:
@@ -61,7 +61,7 @@ def get_device_handle_and_num_devices():
     devices, get a device handle (hDevice).
     """
 
-    config.logger.debug("attempting to open device...")
+    config.logger.info("attempting to open device...")
     device_handle_list = []
     index = 0
     open_a_device = True
@@ -101,5 +101,5 @@ def set_lq_mini_led_green(hDevice):
         parameters[2] = 8
         param_bytes = 3
         ngio_send.send_cmd_get_response(hDevice[i], command, parameters, param_bytes)
-        config.logger.debug("Green LED turned on: Device " + str(i))
+        config.logger.info("Green LED turned on: Device " + str(i))
         i+=1

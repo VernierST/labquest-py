@@ -28,7 +28,7 @@ def search_for_device(device_type):
     search_for_devices_return = p_search_for_devices(
            config.hLib, device_type, comm_transport_id, p_params, byref(p_device_list_signature))
     if search_for_devices_return == -1:
-        config.logger.error("ERROR calling NGIO_SearchForDevices")
+        config.logger.debug("ERROR calling NGIO_SearchForDevices")
     # A device list signature value > 0 means a device was found
     return int(p_device_list_signature.value)
  
@@ -50,7 +50,7 @@ def open_device_list_snapshot():
                                               byref(p_device_list_signature))
     # Check the OpenDeviceListSnapshot return value.  If a handle value is returned, success!
     if hDeviceList == 0:
-        config.logger.error("ERROR calling NGIO_OpenDeviceListSnapshot")
+        config.logger.debug("ERROR calling NGIO_OpenDeviceListSnapshot")
     # Return: Handle to device list snapshot if successful, else NULL.
     return hDeviceList,int(p_num_devices.value)
 
@@ -76,7 +76,7 @@ def snapshot_get_nth_entry(hDeviceList, index):
     device_name = p_devname_buf.value
     # Check the DeviceListSnapshot_GetNthEntry return value. Return: 0 if successful, else -1!
     if device_snapshot_get_nth_return == -1:
-        config.logger.error("ERROR calling NGIO_DeviceListSnapshot_GetNthEntry")
+        config.logger.debug("ERROR calling NGIO_DeviceListSnapshot_GetNthEntry")
     return device_name
 
 
@@ -95,7 +95,7 @@ def close_device_list_snapshot(hDeviceList):
     close_device_list_snapshot_return = p_close_device_list_snapshot(hDeviceList)
     # Check the CloseDeviceListSnapshot return value. Return: 0 if successful, else -1!
     if close_device_list_snapshot_return == -1:
-        config.logger.error("ERROR calling NGIO_CloseDeviceListSnapshot")   
+        config.logger.debug("ERROR calling NGIO_CloseDeviceListSnapshot")   
     return close_device_list_snapshot_return
 
 def device_open(p_devname_buf):
@@ -117,6 +117,7 @@ def device_open(p_devname_buf):
     hDevice = p_device_open(config.hLib, p_name, demand_exclusive_ownership)
     # Check the DeviceOpen return value.  If a handle value is returned, success!
     # Return:	handle to open device if successful (hDevice), else NULL.
+    config.logger.debug("Device handle (hDevice) = " + str(hDevice))
     return hDevice
 
 def acquire_exclusive_ownership(hDevice):
@@ -138,5 +139,5 @@ def acquire_exclusive_ownership(hDevice):
 
     # Check the  return value. Return: 0 if successful, else -1!
     if aquire_exclusive_ownership_return == -1:
-        config.logger.error("ERROR calling NGIO_CloseDeviceListSnapshot")   
+        config.logger.debug("ERROR calling NGIO_CloseDeviceListSnapshot")   
     return aquire_exclusive_ownership_return

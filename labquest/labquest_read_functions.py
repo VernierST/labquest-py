@@ -49,7 +49,7 @@ def get_analog_measurements():
 
     # Are there data in the buffer? If so, read the buffer, not the sensor
     if config.buffer:
-        config.logger.debug("buffer = " + str(config.buffer))
+        config.logger.debug("data in the buffer = " + str(config.buffer))
         measurements = pull_value_from_buffer()
         return measurements     
 
@@ -57,6 +57,7 @@ def get_analog_measurements():
     config.buffer = [] 
     
     num_measurements_available = number_measurements_available(config.sample_period)
+    config.logger.debug("number of measurements available: " +str(num_measurements_available))
     if 0 in num_measurements_available:
         config.logger.debug("Timed Out - no measurements available to read")
         measurements = []
@@ -74,7 +75,7 @@ def get_multi_pt_measurements(num_measurements_to_read):
 
     # make sure there is at least one available, then ask to read all measurements
     num_measurements_available = number_measurements_available_multipt(config.sample_period, num_measurements_to_read)
-    config.logger.debug("num msrmnts = " + str(num_measurements_available))
+    config.logger.debug("num msrmnts available = " + str(num_measurements_available))
     if 0 in num_measurements_available:
         config.logger.debug("Timed Out - no measurements available to read")
         measurements = []
@@ -182,8 +183,9 @@ def read_and_calibrate_data(max_num_measurements_available):
                     hDevice, channel, max_num_measurements_available) 
         
             for value in values:
-                config.logger.debug("value in values = " + str(value))
+                config.logger.debug("raw value to convert to voltage = " + str(value))
                 voltage = ngio_read.convert_to_voltage(hDevice, channel, value, probe_type)
+                config.logger.debug("voltage = " + str(voltage))
                 calibrated_value = apply_calibration(calibration_values, voltage)
                 calibrated_values.append(calibrated_value)
                 
@@ -219,8 +221,9 @@ def read_and_calibrate_multi_pt_data(max_num_measurements_available):
                     hDevice, channel, max_num_measurements_available) 
         
             for value in values:
-                config.logger.debug("value in values = " + str(value))
+                config.logger.debug("raw value to convert to voltage = " + str(value))
                 voltage = ngio_read.convert_to_voltage(hDevice, channel, value, probe_type)
+                config.logger.debug("voltage = " + str(voltage))
                 calibrated_value = apply_calibration(calibration_values, voltage)
                 calibrated_values.append(calibrated_value)
                 
@@ -238,6 +241,7 @@ def apply_calibration(calibration_values, voltage):
     # pull out each sensor's calibration information. This is a dictionary with values of
     # {"equation":, "cal0":, "cal1":, "cal2":, "units":}
     equation = calibration_values["equation"]
+    config.logger.debug("calibration equation = " + str(equation))
     K0 = calibration_values["cal0"]
     K1 = calibration_values["cal1"]
     K2 = calibration_values["cal2"]
@@ -304,7 +308,7 @@ def get_rotary_measurements():
 
     # Are there data in the buffer? If so, read the buffer, not the sensor
     if config.rotary_buffer:
-        config.logger.debug("buffer = " + str(config.buffer))
+        config.logger.debug("data in the buffer = " + str(config.buffer))
         measurements = pull_value_from_rotary_buffer()
         return measurements     
 
@@ -365,7 +369,7 @@ def number_measurements_available_digital(sample_period, num_msrmnts_needed):
                 # as the sample period.
                 while x < 30:
                     num_measurements_available = ngio_read.get_num_measurements_available(hDevice, dig_channel)  
-                    config.logger.debug("num msrmnts = " + str(num_measurements_available))
+                    config.logger.debug("num msrmnts available = " + str(num_measurements_available))
                     # motion needs 2 samples, photogate timing is determined by the user, the others need 1
                     if num_measurements_available >= num_msrmnts_needed: 
                         break

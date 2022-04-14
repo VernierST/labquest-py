@@ -39,7 +39,8 @@ def close():
     # Call NGIO_Uninit() once to 'undo' NGIO_Init()
     ngio_stop.ngio_uninit()  
 
-    # clear all the variables in the config.py file    
+    # clear all the variables in the config.py file   
+    config.logger = None 
     config.buffer = []   
     config.rotary_buffer =[]
     config.dll = None   

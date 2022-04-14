@@ -19,7 +19,7 @@ class LabQuest:
 	interact with Vernier GoDirect devices.
 	"""
 
-	VERSION = "0.1.2"
+	VERSION = "0.1.3"
 
 	""" A class used for labquest communication."""
 	
@@ -50,12 +50,29 @@ class LabQuest:
 		
 		Determine the device type connected (LQ Mini, LQ3, LQ2, LQ Stream, or Original LQ), 
 		and how many of that type. 
+
+		Returns:
+			0 if successful, else -1!
 		"""
 
 		device_type_name = open.open_labquest_devices()
 		if device_type_name == "no_device":
-			config.logger.warning("No LabQuest device found")  
-			return
+			str1 = "No LabQuest device found \n\n"
+			str2 = "Troubleshooting tips... \n"
+			str3 = "Reconnect the USB cable \n"
+			str4 = "Try a different USB port \n"
+			str5 = "Try a different USB cable \n"
+			str6 = "Turn on LabQuest units that have a power button \n"
+			str7 = "Open GA (Graphical Analysis) to verify a good connection \n"
+			str8 = "GA must be installed on Win computers to install a driver \n"
+			config.logger.info(str1 + str2 + str3 +str4 +str5 +str6 +str7 +str8)  
+
+			return_value = -1
+		
+		else:
+			return_value = 0	
+		
+		return return_value
 
 
 	def select_sensors(self, *args):
@@ -86,13 +103,14 @@ class LabQuest:
 
 		# if no devices or no device handles were found then exit this function
 		if not config.device_type or not config.hDevice:
+			config.logger.info("select_sensors() not executed due to no device or device handle")
 			return	   
 
 		active_sensor_channels = sensor.configure_channels_and_sensors(*args)
 		if not any(active_sensor_channels):
-			config.logger.warning("No sensors configured or detected")
+			config.logger.info("No sensors configured or detected")
 		else:
-			config.logger.debug("Channels configured: " + str(active_sensor_channels))
+			config.logger.info("Channels configured: " + str(active_sensor_channels))
 			pass
 
 
@@ -103,6 +121,7 @@ class LabQuest:
 		
 		# if no devices, no device handle, or no sensors then exit this function
 		if not config.device_type or not config.hDevice or not any(config.enabled_all_channels):
+			config.logger.info("sensor_info() not executed due to no device, device handle, or sensors")
 			return		 
 		
 		# analog sensor info is configured in the labquest_select_sensors_functions.py, and stored in the config file
@@ -120,6 +139,7 @@ class LabQuest:
 
 		# if no devices, no device handle, or no sensors then exit this function
 		if not config.device_type or not config.hDevice or not any(config.enabled_all_channels):
+			config.logger.info("enabled_sensor_info() not executed due to no device, device handle, or sensors")
 			return 
 
 		enabled_sensor_info_list = info.get_sensor_long_name_and_units()
@@ -143,6 +163,7 @@ class LabQuest:
 
 		# if no devices, no device handle, or no sensors then exit this function
 		if not config.device_type or not config.hDevice or not any(config.enabled_all_channels):
+			config.logger.info("start() not executed due to no device, device handle, or sensors")
 			return 
 
 		# If the period argument is left blank provide an input prompt for the user to enter the period.
@@ -178,6 +199,7 @@ class LabQuest:
 		
 		# if no devices, no device handle, or no sensors then exit this function
 		if not config.device_type or not config.hDevice or not any(config.enabled_all_channels):
+			config.logger.info("read() not executed due to no device, device handle, or sensors")
 			return		 
 		
 		measurements = read.get_all_measurements()
@@ -203,6 +225,7 @@ class LabQuest:
 		
 		# if no devices, no device handle, or no sensors then exit this function
 		if not config.device_type or not config.hDevice or not any(config.enabled_all_channels):
+			config.logger.info("read_multi_pt() not executed due to no device, device handle, or sensors")
 			return		 
 		
 		measurements = read.get_multi_pt_measurements(num_measurements_to_read)
@@ -230,6 +253,7 @@ class LabQuest:
 
 		# if no devices, no device handle, or no sensors then exit this function
 		if not config.device_type or not config.hDevice or not any(config.enabled_all_channels):
+			config.logger.info("stop() not executed due to no device, device handle, or sensors")
 			return	  
 
 		# Stop the measurements and clear the ngio measurement buffer and the config.buffer

@@ -37,4 +37,4 @@ def ngio_uninit():
     uninit_return = p_uninit(config.hLib)
     # Check the return value (0 if successful, else -1)
     if uninit_return == -1:
-        config.logger.error("ERROR calling NGIO_Uninit")  
+        config.logger.debug("ERROR calling NGIO_Uninit")  
