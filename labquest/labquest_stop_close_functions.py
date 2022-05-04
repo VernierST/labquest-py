@@ -4,6 +4,8 @@ from labquest import config
 from labquest import ngio_stop_functions as ngio_stop
 from labquest import ngio_send_cmd_get_resp as ngio_send
 from labquest import labquest_read_functions as read
+from labquest import labquest_buffer_functions as buffer
+buf = buffer.lq_buffer()
 
 
 def stop_measurements_clear_buffer():
@@ -22,7 +24,7 @@ def stop_measurements_clear_buffer():
     read.clear_the_lq_measurement_buffer()
 
     # Clear the buffer
-    config.buffer = []
+    buf.buffer_clear()
 
 def close():
     """ Close any LabQuest handles, call NGIO Uninit, and reset the variables in the config file
@@ -41,15 +43,15 @@ def close():
 
     # clear all the variables in the config.py file   
     config.logger = None 
-    config.buffer = []   
-    config.rotary_buffer =[]
     config.dll = None   
     config.hLib = None   
     config.hDevice = []    
     config.device_type = None    
+    config.auto_id_list = []
     config.enabled_analog_channels = []  
     config.enabled_dig_channels = []    
-    config.enabled_all_channels = []    
+    config.enabled_all_channels = [] 
+    config.channel_name_list = []   
     config.motion = False    
     config.photogate = False   
     config.photogate_timing = False

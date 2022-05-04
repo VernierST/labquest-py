@@ -1,3 +1,5 @@
+import time
+
 from labquest import config
 from labquest import ngio_open_functions as ngio_open
 from labquest import ngio_send_cmd_get_resp as ngio_send
@@ -94,6 +96,9 @@ def set_lq_mini_led_green(hDevice):
 
     i = 0
     while i < len(hDevice):
+        # if there is a second device, pause for a sec so the user can determine which is dev1
+        if i > 0:
+            time.sleep(2)
         parameters = [0]*14
         command = 0x1D   # SET_LED_STATE = 1D
         parameters[0] = 0

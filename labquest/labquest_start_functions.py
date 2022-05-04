@@ -20,6 +20,7 @@ def configure_channels_to_start(period, reset_dig_counter):
     for hDevice, mask in zip(config.hDevice, mask_list):
         parameters = [0]*14
         command = 0x2C    #SET_SENSOR_CHANNEL_ENABLE_MASK = 0x2C
+        config.logger.debug("start() - set the mask value: " + str(mask))
         parameters[0] = mask
         param_bytes = 4
         ngio_send.send_cmd_get_response(hDevice, command, parameters, param_bytes)
@@ -115,11 +116,11 @@ def get_the_mask_value():
                     mask = 0
                 device_mask_list.append(mask)
                 # create mask by summing the hex values for all of the enabled channels    
-            mask_sum = sum(device_mask_list)
-            mask_list.append(mask_sum)
+        mask_sum = sum(device_mask_list)
+        mask_list.append(mask_sum)
         
         i += 1
-        
+         
     return mask_list
     
 def set_dig_ch_sampling_mode():
@@ -136,8 +137,8 @@ def set_dig_ch_sampling_mode():
             else:
                 break
 
-            if dig_ch_dictionary[key] == '':
-                break
+            if dig_ch_dictionary[key] == 'no_sensor':
+                pass
             elif dig_ch_dictionary[key] == 'motion':
                 sampling_mode = 3   #define NGIO_SAMPLING_MODE_PERIODIC_MOTION_DETECT 3
             elif dig_ch_dictionary[key] == 'photogate_timing':
@@ -152,11 +153,13 @@ def set_dig_ch_sampling_mode():
                 sampling_mode = 6    #define NGIO_SAMPLING_MODE_CUSTOM 6
             else:
                 config.logger.debug("Invalid dig ch dictionary key")
-            command = 0x29    #define NGIO_CMD_ID_SET_SAMPLING_MODE 0x29
-            parameters[0] = dig_channel
-            parameters[1] = sampling_mode
-            param_bytes = 2
-            ngio_send.send_cmd_get_response(hDevice, command, parameters, param_bytes)
+            
+            if dig_ch_dictionary[key] != 'no_sensor': 
+                command = 0x29    #define NGIO_CMD_ID_SET_SAMPLING_MODE 0x29
+                parameters[0] = dig_channel
+                parameters[1] = sampling_mode
+                param_bytes = 2
+                ngio_send.send_cmd_get_response(hDevice, command, parameters, param_bytes)
 
 def reset_digital_counter():
     """ reset the digital counter to zero
