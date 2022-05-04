@@ -150,7 +150,6 @@ def ddsmem_get_calibration_equation(hDevice, channel):
     # Check the DDS_GetCalibrationEquation command return value.  If a 0 returned, success, else -1!
     if ddsmem_get_calibration_equation_return == -1:
         config.logger.debug("ERROR calling DDSMem GetCalibrationEquation")
-    config.logger.debug("Calibration Equation = " + str(p_calibration_equation.value))
     return p_calibration_equation.value
 
 

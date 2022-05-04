@@ -13,13 +13,14 @@ from labquest import labquest_start_functions as start
 from labquest import labquest_stop_close_functions as stop
 from labquest import labquest_dcu_functions as dcu
 from labquest import labquest_photogate_timing_functions as photo
+from labquest import labquest_buffer_functions as buffer
+buf = buffer.lq_buffer()
 
 class LabQuest:
-	""" The labquest module wraps the hidapi and bleak modules to create an easy way to
-	interact with Vernier GoDirect devices.
+	""" The labquest module creates an easy way to interact with Vernier LabQuest devices.
 	"""
 
-	VERSION = "0.1.3"
+	VERSION = "0.2.0"
 
 	""" A class used for labquest communication."""
 	
@@ -27,8 +28,8 @@ class LabQuest:
 	 
 
 	def __init__(self):
-		""" Load the NGIO shared library (dll), retrieve the library handle (hLib), and get 
-		the dll library version number.
+		""" Load the NGIO shared library (dll or framework), retrieve the library handle (hLib), and get 
+		the NGIO library version number.
 		"""
 
 		config.logger = logging.getLogger(__name__)
@@ -41,7 +42,7 @@ class LabQuest:
 		""" Get the library version
 
 		Returns:
-			godirect version number (int)
+			labquest version number (int)
 		"""
 		return self.VERSION
 
@@ -64,7 +65,7 @@ class LabQuest:
 			str5 = "Try a different USB cable \n"
 			str6 = "Turn on LabQuest units that have a power button \n"
 			str7 = "Open GA (Graphical Analysis) to verify a good connection \n"
-			str8 = "GA must be installed on Win computers to install a driver \n"
+			str8 = "GA must be installed on Win computers to install a required driver \n"
 			config.logger.info(str1 + str2 + str3 +str4 +str5 +str6 +str7 +str8)  
 
 			return_value = -1
@@ -74,49 +75,52 @@ class LabQuest:
 		
 		return return_value
 
+	def select_sensors(self, ch1='no_sensor', ch2='no_sensor', ch3='no_sensor', dig1='no_sensor', dig2='no_sensor', device=0):
+		""" Configure ch1, ch2, ch3, dig1, and dig2 with sensors. If connecting a LabQuest analog 
+		sensor to ch1, ch2 or ch3, set the value to 'lq_sensor'. See Args below for other options.
 
-	def select_sensors(self, *args):
-		""" Configure your LabQuest channels. if the select_sensors argument is left blank, 
-			a list of sensor channels is provided by a prompt in the terminal for the user 
-			to select from. To run code without a prompt, set the argument as a library
-			(or libraries, if connecting multiple LabQuest devices)
-		
 		Args: 
-			* args: a library for each device, where the key refers to the 
-			channel, and the value refers to how the channel is configured. 
-			
-			The key options are:
-				'ch1', 'ch2', 'ch3', 'dig1', and 'dig2'. 
-			The values for the 3 analog channels are:
-				'default', 'cal0', 'cal1', 'cal2', 'raw_voltage'. 
-			The dig channel values are:
-				'motion', 'photogate', 'rotary_motion', 'rotary_motion_high_res', 'dcu', 'dcu_pwm'. 
+			ch1, ch2, and ch3 (str):
+			'lq_sensor', 'lq_sensor_cal0', 'lq_sensor_cal1', 'lq_sensor_cal2', 'raw_voltage', 'no_sensor'. 
+
+			dig1 and dig2 (str):
+			'motion', 'photogate_count', 'photogate_timing', 'rotary_motion', 'rotary_motion_high_res', 
+			'dcu', 'dcu_pwm', 'no_sensor' 
+
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
 			
 		Example: 
-			Temp sensor connected to channel 1 and wanting to read in degrees Celsius:
-				select_sensors('ch1':'default')
+			A Vernier LabQuest temp sensor connected to ch1 and wanting to read in degrees
+			Celsius (which is the default calibration for this lq sensor):
+				select_sensors(ch1='lq_sensor')
 		Example:
-			Temp sensor connected to channel 1, wanting degrees Fahrenheit, and a non-Vernier
-			sensor connected to ch2:
-				select_sensors('ch1':'cal1', 'ch2':'raw_voltage')
+			A Vernier Temp sensor connected to ch1 and wanting degrees Fahrenheit, and a motion
+			detector connected to dig1:
+				select_sensors(ch1='lq_sensor_cal1', dig1='motion')
 		"""
 
 		# if no devices or no device handles were found then exit this function
 		if not config.device_type or not config.hDevice:
-			config.logger.info("select_sensors() not executed due to no device or device handle")
+			config.logger.info("setup_channels() not executed due to no device or device handle")
 			return	   
 
-		active_sensor_channels = sensor.configure_channels_and_sensors(*args)
+		active_sensor_channels = sensor.configure_channels(device, ch1, ch2, ch3, dig1, dig2)
 		if not any(active_sensor_channels):
 			config.logger.info("No sensors configured or detected")
 		else:
 			config.logger.info("Channels configured: " + str(active_sensor_channels))
 			pass
 
+	def sensor_info(self, ch, device=0):
+		""" Returns analog sensor information, such as the calibration equations that are stored
+		on the sensor. This only applies to analog sensors connected to ch1, ch2, or ch3.
 
-	def sensor_info(self, device=0, channel=1):
-		""" Returns sensor information, such as the calibration equation that is stored
-		on the sensor.   
+		Args: 
+			ch (str): Options include 'ch1', 'ch2', 'ch3'  
+
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
 		"""			 
 		
 		# if no devices, no device handle, or no sensors then exit this function
@@ -125,16 +129,21 @@ class LabQuest:
 			return		 
 		
 		# analog sensor info is configured in the labquest_select_sensors_functions.py, and stored in the config file
-		sensor_info = info.get_sensor_info(device, channel)
+		sensor_info = info.get_sensor_info(device, ch)
 		
 		return sensor_info
 
-	def enabled_sensor_info(self):
-		""" Returns each enabled sensors' name and units (good for column headers).
+	def enabled_sensor_info(self, ch, device=0):
+		""" Returns sensors' name and units (good for column headers).
 
+		Args: 
+			ch (str): Options include 'ch1', 'ch2', 'ch3', 'dig1', 'dig2'.  
+
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
+		
 		Returns:
-			sensor_info[]: A 1D list that includes each enabled sensors' long name with 
-			units, e.g. ['Force (N)', 'X-axis acceleration (m/s²)'].  
+			sensor_info (str): Sensor's long name with units, e.g. 'Force (N)' 
 		"""
 
 		# if no devices, no device handle, or no sensors then exit this function
@@ -142,12 +151,9 @@ class LabQuest:
 			config.logger.info("enabled_sensor_info() not executed due to no device, device handle, or sensors")
 			return 
 
-		enabled_sensor_info_list = info.get_sensor_long_name_and_units()
+		enabled_sensor_info = info.get_sensor_long_name_and_units(device, ch)
 
-		if len(enabled_sensor_info_list) == 1:
-			return enabled_sensor_info_list[0]
-		else:
-			return enabled_sensor_info_list
+		return enabled_sensor_info
 
 	   
 	def start(self, period=None, reset_dig_counter=True):
@@ -184,17 +190,25 @@ class LabQuest:
 		# Set the analog input value, the mask value, and sampling mode
 		start.configure_channels_to_start(sample_period, reset_dig_counter)
 
+		# create a buffer for each active channel. For fast sampling there may be more than one value 
+		# returned in a read(). One value is returned and the rest are stored in this buffer.
+		buf.buffer_init()
+
 		# start data collection
 		start.start_measurements()						  
 
 		
-	def read(self):
-		""" Take single point readings from the enabled sensors and return the readings.
+	def read(self, ch, device=0):
+		""" Take single point readings from the desired channel.
 
+		Args: 
+			ch (str): Options include 'ch1', 'ch2', 'ch3', 'dig1', 'dig2'.  
+
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
+		
 		Returns:
-			measurements: A single data point for each enabled sensor. If
-			a single sensor is connected, just the data point is returned. Otherwise a list
-			containing each configured sensor's data point. 
+			measurement: A single data point for the selected channel. 
 		"""	  
 		
 		# if no devices, no device handle, or no sensors then exit this function
@@ -202,19 +216,19 @@ class LabQuest:
 			config.logger.info("read() not executed due to no device, device handle, or sensors")
 			return		 
 		
-		measurements = read.get_all_measurements()
+		measurement = read.get_measurement(device, ch)
+		return measurement
 
-		if not measurements:
-			return None
-		elif len(measurements) == 1:
-			return measurements[0]
-		else:
-			return measurements
-
-	def read_multi_pt(self, num_measurements_to_read):
-		""" Take multi-point readings from the enabled sensors 
+	def read_multi_pt(self, ch, num_measurements_to_read, device=0):
+		""" Take a specified number of multi-point readings from the selected channel. This
+		only applies to analog sensors connected to ch1, ch2, or ch3.
 
 		Args: 
+			ch (str): Options include 'ch1', 'ch2', 'ch3'
+
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
+
 			num_measurements_to_read (int):  number of samples to collect.
 
 		Returns:
@@ -228,14 +242,9 @@ class LabQuest:
 			config.logger.info("read_multi_pt() not executed due to no device, device handle, or sensors")
 			return		 
 		
-		measurements = read.get_multi_pt_measurements(num_measurements_to_read)
+		measurements = read.get_multi_pt_measurements(device, ch, num_measurements_to_read)
 
-		if not measurements:
-			return None
-		elif len(measurements) == 1:
-			return measurements[0]
-		else:
-			return measurements
+		return measurements
 
 	
 	def stop(self, stop_measurements=True, stop_dcu=True, stop_pwm=True):
@@ -256,7 +265,7 @@ class LabQuest:
 			config.logger.info("stop() not executed due to no device, device handle, or sensors")
 			return	  
 
-		# Stop the measurements and clear the ngio measurement buffer and the config.buffer
+		# Stop the measurements and clear the ngio measurement buffer and the data buffer()
 		if stop_measurements:
 			stop.stop_measurements_clear_buffer()
 
@@ -275,42 +284,56 @@ class LabQuest:
 		stop.close()
 
 	
-	def dcu(self, *values):
+	def dcu(self, ch, value, device=0):
 		""" Control the output lines of the DCU
 
 		Args: 
-			*values: send the DCU a value from 0-15 to turn lines on and off. 
+			ch (str): Options include 'dig1' or 'dig2'
+
+			value (int): send the DCU a value from 0-15 to turn lines on and off.
+			
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
 		"""
 		
-		dcu.set_io_line(*values)
+		dcu.set_io_line(ch, value, device)
 
-	def dcu_pwm(self, frequency_Hz, duty_cycle):
-		""" Control the PWM output from line D4 of dig1
+	def dcu_pwm_dig1(self, frequency_Hz, duty_cycle, device=0):
+		""" Control the DCU's PWM output, this occurs on the DCU's line D4. The DCU must be connected 
+		to dig1 (PWM is not available on channel dig2)
 		
 		Args: 
 			frequency_Hz (int): 2.5 Hz (0.4 sec period) to 1,000,000 Hz (1 microsecond period).
 
 			duty_cycle (int):  set the duty cycle with a value of 0 to 100
+
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
 		"""
 		
-		dcu.set_pwm(frequency_Hz, duty_cycle)
+		dcu.set_pwm(frequency_Hz, duty_cycle, device)
 
 
-	def photogate_timing(self, samples, timeout):
+	def photogate_timing(self, ch, samples, timeout, device=0):
 		"""Perform photogate timing
 
 		Args: 
+			ch (str): Options include 'dig1' or 'dig2'
+			
 			samples(int): number of timing samples to record
 
 			timeout: (seconds) Maximum time to wait for all samples to be collected.
 
+			device (int): If you have a single LabQuest connected, then device=0. 
+			If you need to configure a second LabQuest device, then device=1
+
 		Returns: 
-			timing_values: returns the photogate blocked time, unblocked time, 
+			timing_values []: returns the photogate blocked time, unblocked time, 
 			blocked time, unblocked time, etc..
 		"""
 
 		samples = samples + 2	# to get the number of samples requested, actually need 2 extra
 		timeout = timeout/3   # the read takes 3x the timeout, so need to divide by 3 here
-		timing_values = photo.get_photogate_timing(samples, timeout)
+		timing_values = photo.get_photogate_timing(ch, samples, timeout, device)
 
 		return timing_values
