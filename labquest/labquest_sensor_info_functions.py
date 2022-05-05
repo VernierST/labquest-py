@@ -3,7 +3,7 @@ from labquest import ngio_sensor_functions as ngio_sensor
 
 
 def get_sensor_long_name_and_units(device_index, ch):
-    """ Return 1D list of strings that combines long name with units
+    """ Return a string that combines the sensor's long name with units
     """
     
     if ch == 'ch1':

@@ -9,7 +9,7 @@ buf = buffer.lq_buffer()
 
 
 def stop_measurements_clear_buffer():
-    """ Stop data collection and clear both the NGIO buffer and config.buffer
+    """ Stop data collection and clear both the NGIO buffer and the buffer (queue)
     """
 
     # Stop the measurements
