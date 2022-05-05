@@ -31,7 +31,7 @@ def get_photogate_timing(ch, samples, timeout, device_index):
     return timing_values
 
 def read_photogate_timing(num_measurements_available, device_index, channel):
-    """ For each active channel, get the count value and timestamp measurement.
+    """ For each active channel, get the timestamp measurements.
     """
 
     timing_values = []

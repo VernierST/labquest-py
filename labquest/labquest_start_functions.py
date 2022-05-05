@@ -5,7 +5,10 @@ from labquest import ngio_send_cmd_get_resp as ngio_send
 
 def configure_channels_to_start(period, reset_dig_counter):
     """
-    Prior to starting data collection, there are a few steps that need to happen.
+    Prior to starting data collection, there are a few steps that need to happen, depending
+    on what sensors are connected: Configure analog channel as 5V or 10V, set the mask value, 
+    set the digital sampling mode, reset the digital counter, and configure io lines as output, 
+    as needed.
     """
 
     config.sample_period = period

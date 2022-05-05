@@ -8,8 +8,7 @@ from labquest import ngio_send_cmd_get_resp as ngio_send
 
 def configure_channels(device_index, ch1, ch2, ch3, dig1, dig2):
     """
-    Use the arguments to create various lists of what sensors are active. These lists are 
-    used in the rest of the program to determine what channels to start, read, etc... If the user did
+    Use the arguments to create various lists of what sensors are active. If the user did
     not input arguments, a prompt will take them through each channel to configure.
     """
     
@@ -80,7 +79,8 @@ def configure_channels(device_index, ch1, ch2, ch3, dig1, dig2):
 
 
 def get_list_of_device_enabled_analog_channels(device_index):
-    """ Return a 1D list of all channels that have LabQuest auto-id sensors connected (sensor id > 0)
+    """ Return a 1D list of all analog channels that have LabQuest auto-id sensors 
+    connected (sensor id > 0) for the specified labquest device.
     """
 
     hDevice = config.hDevice[device_index]
@@ -94,7 +94,7 @@ def get_list_of_device_enabled_analog_channels(device_index):
     return active_ch
 
 def read_sensor_dds_memory(device_index):
-    """For each enabled channel, read the sensor's dds memory (auto-id and resistor 
+    """For each enabled analog channel, read the sensor's dds memory (auto-id and resistor 
     id are done differently)
     """
 
@@ -111,7 +111,7 @@ def read_sensor_dds_memory(device_index):
             ddsmem_set_record(hDevice, channel, sensor_id)
 
 def get_sensor_id(hDevice, channel):
-    """ Each LabQuest sensor has a unique ID. Get that value
+    """ Each LabQuest analog sensor has a unique ID. Get that value
     """
     parameters = [0]*14
     command = 0x28   #GET_SENSOR_ID = 28
@@ -177,7 +177,7 @@ def ddsmem_set_record(hDevice, channel, sensor_id):
 
 
 def custom_analog_ch_setup(device_index): 
-    """ This option provides the user with a way to configure a channel to read
+    """ This option provides the user with a way to configure an analog channel to read
     a non-Vernier sensor, or to read a LabQuest sensor's raw voltage. Returns an
     updated enabled channel list.
     """ 
@@ -277,7 +277,7 @@ def custom_digital_ch_setup():
          
 
 def set_channel_to_read_raw_voltage(hDevice, channel):
-    """ Overwrite the ddsmem in order to make this channel read Raw Voltage (0-5V)
+    """ Overwrite the ddsmem in order to make this analog channel read Raw Voltage (0-5V)
     """
 
     long_name = "Potential"

@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="labquest.html"><font color="#ffffff">labquest</font></a>.labquest_start_functions</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/ihonohan/wrk/gdxlib/github/labquest-py/labquest/labquest_start_functions.py">/Users/ihonohan/wrk/gdxlib/github/labquest-py/labquest/labquest_start_functions.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Csswartley%5Cgit_files%5Clabquest_py_repo%5Clabquest%5Clabquest_start_functions.py">c:\users\sswartley\git_files\labquest_py_repo\labquest\labquest_start_functions.py</a></font></td></tr></table>
     <p></p>
 <p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
@@ -28,7 +28,10 @@
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt><a name="-configure_channels_as_5V_or_10V"><strong>configure_channels_as_5V_or_10V</strong></a>()</dt><dd><tt>Configure&nbsp;each&nbsp;active&nbsp;analog&nbsp;channel&nbsp;as&nbsp;a&nbsp;5V&nbsp;channel&nbsp;or&nbsp;a&nbsp;10V&nbsp;channel</tt></dd></dl>
- <dl><dt><a name="-configure_channels_to_start"><strong>configure_channels_to_start</strong></a>(period, reset_dig_counter)</dt><dd><tt>Prior&nbsp;to&nbsp;starting&nbsp;data&nbsp;collection,&nbsp;there&nbsp;are&nbsp;a&nbsp;few&nbsp;steps&nbsp;that&nbsp;need&nbsp;to&nbsp;happen.</tt></dd></dl>
+ <dl><dt><a name="-configure_channels_to_start"><strong>configure_channels_to_start</strong></a>(period, reset_dig_counter)</dt><dd><tt>Prior&nbsp;to&nbsp;starting&nbsp;data&nbsp;collection,&nbsp;there&nbsp;are&nbsp;a&nbsp;few&nbsp;steps&nbsp;that&nbsp;need&nbsp;to&nbsp;happen,&nbsp;depending<br>
+on&nbsp;what&nbsp;sensors&nbsp;are&nbsp;connected:&nbsp;Configure&nbsp;analog&nbsp;channel&nbsp;as&nbsp;5V&nbsp;or&nbsp;10V,&nbsp;set&nbsp;the&nbsp;mask&nbsp;value,&nbsp;<br>
+set&nbsp;the&nbsp;digital&nbsp;sampling&nbsp;mode,&nbsp;reset&nbsp;the&nbsp;digital&nbsp;counter,&nbsp;and&nbsp;configure&nbsp;io&nbsp;lines&nbsp;as&nbsp;output,&nbsp;<br>
+as&nbsp;needed.</tt></dd></dl>
  <dl><dt><a name="-get_the_mask_value"><strong>get_the_mask_value</strong></a>()</dt><dd><tt>Get&nbsp;the&nbsp;mask&nbsp;value.&nbsp;This&nbsp;is&nbsp;a&nbsp;hex&nbsp;value&nbsp;corresponding&nbsp;to&nbsp;what&nbsp;channels&nbsp;are&nbsp;enabled</tt></dd></dl>
  <dl><dt><a name="-reset_digital_counter"><strong>reset_digital_counter</strong></a>()</dt><dd><tt>reset&nbsp;the&nbsp;digital&nbsp;counter&nbsp;to&nbsp;zero</tt></dd></dl>
  <dl><dt><a name="-set_dig_ch_sampling_mode"><strong>set_dig_ch_sampling_mode</strong></a>()</dt><dd><tt>Call&nbsp;the&nbsp;Set&nbsp;Sampling&nbsp;Mode&nbsp;command&nbsp;for&nbsp;digital&nbsp;channels</tt></dd></dl>

@@ -8,7 +8,7 @@ from labquest import labquest_buffer_functions as buffer
 buf = buffer.lq_buffer()
 
 def get_measurement(device_index, ch):
-    """ Get measurements from all configured channels (analog and digital)
+    """ Get measurement from the specified channel (analog and digital)
     """
 
     if ch == 'ch1':
@@ -31,8 +31,7 @@ def get_measurement(device_index, ch):
         return dig_measurement
 
 def get_analog_measurement(device_index, ch):
-    """
-    Get a single analog sensor measurement. This may be from the buffer, or as a new reading.
+    """ Get a single analog sensor measurement. This may be from the buffer, or as a new reading.
     """
     
     # Are there data in the buffer? If so, read the buffer, not the sensor
@@ -53,7 +52,7 @@ def get_analog_measurement(device_index, ch):
     return measurement
 
 def get_digital_measurement(device_index, ch, channel):
-    """
+    """ Get a single digital sensor measurement. This may be from the buffer, or as a new reading.
     """
 
     # Are there data in the buffer? If so, read the buffer, not the sensor
@@ -86,7 +85,7 @@ def get_digital_measurement(device_index, ch, channel):
     return measurement
 
 def get_multi_pt_measurements(device_index, ch, num_measurements_to_read):
-    """ Get a packet of analog sensor measurements.
+    """ Get a packet of analog sensor measurements from the specified channel.
     """
 
     if ch == 'ch1':
@@ -109,7 +108,7 @@ def get_multi_pt_measurements(device_index, ch, num_measurements_to_read):
     return measurements
 
 def number_measurements_available(sample_period, device_index, channel, num_msrmnts_needed=1):
-    """ Return a list of how many analog sensor measurements are availabe for the channel.
+    """ Return a value for how many analog sensor measurements are availabe for the channel.
     """
     
     hDevice = config.hDevice[device_index]
@@ -127,7 +126,7 @@ def number_measurements_available(sample_period, device_index, channel, num_msrm
     return num_measurements_available  
 
 def number_measurements_available_multipt(sample_period, device_index, channel, num_msrmnts):
-    """ Return a list of how many analog sensor measurements are availabe for each active channel.
+    """ Return a value of how many analog sensor measurements are availabe for the channel.
     """
 
     hDevice = config.hDevice[device_index]
@@ -148,9 +147,9 @@ def number_measurements_available_multipt(sample_period, device_index, channel, 
     return num_measurements_available
 
 def read_and_calibrate_data(num_measurements_available, device_index, channel):
-    """ For each active analog channel, get the raw measurement (this may be a single value or multiple
+    """ For the analog channel, get the raw measurement (this may be a single value or multiple
     if sampling fast), convert to a voltage, and then apply the calibration to convert to 
-    proper sensor units. One value for each sensor is returned with any extra values sent to the buffer.
+    proper sensor units. One value is returned with any extra values sent to the buffer.
     """
 
     calibrated_values = []
@@ -183,7 +182,7 @@ def read_and_calibrate_data(num_measurements_available, device_index, channel):
     return measurement
 
 def read_and_calibrate_digital_data(num_measurements_available, device_index, channel, key_value):
-    """
+    """ Get the raw value from the digital channel and calibrate based on what sensor is connected.
     """
 
     calibrated_values = []
@@ -240,7 +239,7 @@ def read_and_calibrate_digital_data(num_measurements_available, device_index, ch
     return measurement
 
 def read_and_calibrate_multi_pt_data(device_index, channel, num_measurements):
-    """ For each active channel, get the raw measurements, convert to voltage, and then 
+    """ Get the raw measurements, convert to voltage, and then 
     apply the calibration to convert to proper sensor units. The number of data points
     asked for are returned.
     """
@@ -311,3 +310,33 @@ def apply_calibration(voltage, hDevice, channel):
                 calibrated_value = T + 273    # Kelvin
     
     return calibrated_value 
+
+def clear_the_lq_measurement_buffer():
+    """ This function empties the measurement buffers. This should happen once measurements have been
+    stopped, and before starting measurements again. 
+    """
+    
+    sleep(1)    # wait a second and then read the ngio buffer to clear it
+    if any(config.enabled_analog_channels):
+        for hDevice, device_enabled_chs in zip(config.hDevice, config.enabled_analog_channels):
+            for channel in device_enabled_chs:
+                num_measurements_available = ngio_read.get_num_measurements_available(hDevice, channel)  
+                if num_measurements_available >= 1: 
+                    num_of_measurements, values, time_stamps = ngio_read.read_raw_measurements(
+                            hDevice, channel, num_measurements_available)    
+    
+    if config.motion or config.rotary_motion or config.rotary_motion_high_res:
+        for hDevice, dig_ch_dictionary in zip(config.hDevice, config.device_dig_channel_dictionary):
+            for key in dig_ch_dictionary:
+                if key == "dig1":
+                    dig_channel = 5
+                elif key == 'dig2':
+                    dig_channel = 6
+                else:
+                    break
+                
+                if dig_ch_dictionary[key] in ('motion', 'rotary_motion', 'rotary_motion_high_res'):
+                    num_measurements_available = ngio_read.get_num_measurements_available(hDevice, dig_channel)
+                    if num_measurements_available >= 1:
+                        num_of_measurements, values, time_stamps = ngio_read.read_raw_measurements(
+                            hDevice, dig_channel, num_measurements_available) 

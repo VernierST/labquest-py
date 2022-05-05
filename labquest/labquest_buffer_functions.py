@@ -4,6 +4,13 @@ from labquest import config
 
 
 class lq_buffer:
+    """ Create a buffer for the analog and digital channels of up to two labquest devices.
+    The lq_buffer class uses queue to store excess data during data collection. For faster
+    single-pt sampling, a call to read() may return a packet of data from the labquest. The most 
+    recent data pt will be returned, the rest stored in this buffer. During the next call to read(), 
+    a single data point from this buffer will be returned, rather than from the labquest. This will 
+    continue until the buffer is empty, at which point the read() will again pull data from the labquest. 
+	"""
 
     ch1_0 = Queue(maxsize=1)
     ch2_0 = Queue(maxsize=1)
@@ -21,7 +28,9 @@ class lq_buffer:
         pass
 
     def buffer_init(self):
-        """
+        """ Initialize the buffer by setting queue(maxsize) = 0. This
+        sets the upperbound limit on the number of items that can be placed in the queue.  
+        When maxsize is less than or equal to zero, the queue size is infinite.
         """
 
         device_index = 0
@@ -59,7 +68,7 @@ class lq_buffer:
             device_index += 1
 
     def buffer_is_empty(self, device_index, ch):
-        """
+        """ Returns True if the buffer (the queue) for a specific channel is empty.
         """
 
         if device_index == 0:
@@ -90,7 +99,7 @@ class lq_buffer:
         return is_empty
 
     def buffer_put(self, device_index, ch, new_data):
-        """
+        """ Add a list of data to the buffer for a specified channel
         """
 
         if device_index == 0:
@@ -131,7 +140,7 @@ class lq_buffer:
 
        
     def buffer_get(self, device_index, ch):
-        """
+        """ Pull a single data point from the buffer of a specified channel.
         """
 
         measurement = None
@@ -175,7 +184,7 @@ class lq_buffer:
 
 
     def buffer_clear(self):
-        """
+        """ Uninit the buffer by clearing queue
         """
         config.logger.debug("buffer clear")
         with lq_buffer.ch1_0.mutex:
