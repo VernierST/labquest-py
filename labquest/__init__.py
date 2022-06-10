@@ -20,7 +20,7 @@ class LabQuest:
 	""" The labquest module creates an easy way to interact with Vernier LabQuest devices.
 	"""
 
-	VERSION = "0.2.1"
+	VERSION = "1.0.0"
 
 	""" A class used for labquest communication."""
 	
