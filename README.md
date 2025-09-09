@@ -24,6 +24,30 @@ pip install labquest
 
 Go to our [Getting Started with Vernier LabQuest and Python document](https://github.com/VernierST/labquest-examples/blob/main/python/readme.md) for detailed information regarding installation and usage of the labquest module.
 
+## Local builds
+
+In order to explore and contribute to this module, you can modify this module, build and install it locally.
+
+_# Uninstall any installed version_
+```bash
+pip uninstall labquest
+```
+
+_# Install the build tool (if you have not already)_
+```bash
+pip install build
+```
+
+_# Build the module_
+```bash
+python -m build
+```
+
+_# Install the module_
+```bash
+pip install .
+```
+
 ## License
 
 GNU General Public License v3 (GPLv3)
